@@ -36,7 +36,6 @@ const ARCGIS_EVENT = [
 
 export default {
   name: 'arcgis-view',
-  // TODO: 视图中心点
   props: {
     // 是否是混合图层
     mixed: {
@@ -54,10 +53,18 @@ export default {
     extent: {
       type: Object
     },
+    // 地图中心点
+    center: {
+      type: Array
+    },
     // 显示鼠标坐标
     showCursorXY: {
       type: Boolean,
       default: false
+    },
+    // 视图缩放等级
+    zoom: {
+      type: Number
     }
   },
   data () {
@@ -86,6 +93,38 @@ export default {
     // 创建视图
     this.createView()
   },
+  watch: {
+    /**
+     * 监控extent变化
+     * TODO:待测试
+     */
+    extent: {
+      deep: true,
+      handler: function (_new) {
+        if (_new) {
+          this.getActiveView().extent = _new
+        }
+      }
+    },
+    /**
+     * 监控中心点变化
+     * TODO:待测试
+     */
+    center () {
+      if (this.center) {
+        this.getActiveView.center = this.center
+      }
+    },
+    /**
+     * 监控缩放等级变化变化
+     * TODO:待测试
+     */
+    zoom () {
+      if (this.zoom) {
+        this.getActiveView.zoom = this.zoom
+      }
+    }
+  },
   methods: {
     /**
      * 获取激活状态的view
@@ -104,12 +143,20 @@ export default {
       // 视图初始化参数
       const initialViewParams = {
         map: map,
-        extent: this.extent,
         container: this.viewContainer.container,
         constraints: {
           rotationEnabled: false
         },
         viewType: this.viewType
+      }
+      if (this.extent) {
+        initialViewParams.extent = this.extent
+      }
+      if (this.center) {
+        initialViewParams.center = this.center
+      }
+      if (this.zoom) {
+        initialViewParams.zoom = this.zoom
       }
       if (this.mixed) {
         this.create2D3DView(initialViewParams)
@@ -131,7 +178,7 @@ export default {
       }
       let map = null
       if (promiseMethod != null) {
-        map = await promiseMethod()
+        map = await promiseMethod(this.viewContainer)
       } else {
         map = await this.createDefaultMap()
       }
@@ -143,10 +190,13 @@ export default {
      */
     async createDefaultMap () {
       const [Map] = await GisUtil.loadModules('esri/Map')
-      return new Map({
-        basemap: 'satellite',
-        ground: 'world-elevation'
-      })
+      const properties = {
+        basemap: 'satellite'
+      }
+      if (this.mixed) {
+        properties.ground = world-elevation
+      }
+      return new Map(properties)
     },
     /**
      * 创建单一视图
@@ -286,15 +336,16 @@ export default {
      */
     switchView () {
       const is3D = this.getActiveView().type === '3d'
+      const viewpoint = this.viewContainer.activeView.viewpoint.clone()
       this.getActiveView().container = null
       if (is3D) {
         // 获取当前视图中心店
-        this.viewContainer.mapView.viewpoint = this.viewContainer.activeView.viewpoint.clone()
+        this.viewContainer.mapView.viewpoint = viewpoint
         this.viewContainer.mapView.container = this.viewContainer.container
         // 设置激活视图
         this.viewContainer.activeView = this.viewContainer.mapView
       } else {
-        this.viewContainer.sceneView.viewpoint = this.viewContainer.activeView.viewpoint.clone()
+        this.viewContainer.sceneView.viewpoint = viewpoint
         this.viewContainer.sceneView.container = this.viewContainer.container
         this.viewContainer.activeView = this.viewContainer.sceneView
       }

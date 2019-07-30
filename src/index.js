@@ -1,8 +1,17 @@
 // 视图组件
 import ArcgisView from '../packages/view'
+import {
+  GraphicsLayer
+} from '../packages/layers'
+
+import {
+  ArcgisMap
+} from '../packages/map'
 
 const components = [
-  ArcgisView
+  ArcgisView,
+  GraphicsLayer,
+  ArcgisMap
 ]
 
 const install = function (Vue) {
