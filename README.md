@@ -6,7 +6,7 @@
 mixed | 2D、3D混合图层 | Boolean | | false
 jsUrl | init.js路径| string | |
 jsBaseUrl | arcgis baseUrl | string | |
-viewType | 视图类型，mixed为true时该属性无效 | string | 2D、3D | 3D
+viewType | 视图类型，mixed为true时该属性无效 | string | 2D、3D | 2D
 extent | 视图边界，参考arcgis文档 | object | |
 center | 视图中心点，参考arcgis文档 | Array<Number> | | 
 showCursorXY | 是否显示鼠标坐标点 | Boolean | | false
