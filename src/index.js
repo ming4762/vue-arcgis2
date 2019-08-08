@@ -1,7 +1,8 @@
 // 视图组件
 import ArcgisView from '../packages/view'
 import {
-  GraphicsLayer
+  GraphicsLayer,
+  WebTileLayer
 } from '../packages/layers'
 
 import {
@@ -11,6 +12,7 @@ import {
 const components = [
   ArcgisView,
   GraphicsLayer,
+  WebTileLayer,
   ArcgisMap
 ]
 

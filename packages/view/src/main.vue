@@ -194,7 +194,7 @@ export default {
         basemap: 'satellite'
       }
       if (this.mixed) {
-        properties.ground = world-elevation
+        properties.ground = 'world-elevation'
       }
       return new Map(properties)
     },
@@ -353,6 +353,16 @@ export default {
       if (this.$listeners[events.switchView]) {
         this.$emit(this.$listeners[events.switchView])
       }
+    },
+    /**
+     * 设置esri配置
+     * TODO:测试代码
+     */
+    async setEsriConfig () {
+      const [esriConfig] = await GisUtil.loadModules('esri/config')
+      // esriConfig.fontsUrl = 'http://192.168.1.140:6081/arcgis_js_v410_api/fonts/'
+      esriConfig.fontsUrl = 'http://localhost:8082/js/arcgis/fonts/'
+      return esriConfig
     }
   },
   /**
