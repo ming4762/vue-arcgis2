@@ -1,29 +1,9 @@
-# test2
+# vue-arcgis2
 
-## Project setup
-```
-npm install
-```
+## arcgis-view组件
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+### Attributes
+参数 | 说明 | 类型 | 可选值 | 默认值
+---|---|---|---|---|---
+mixed | 2D、3D混合图层 | Boolean | | false
 
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Run your tests
-```
-npm run test
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
