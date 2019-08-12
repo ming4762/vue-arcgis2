@@ -30,27 +30,6 @@ export default {
   },
   methods: {
     /**
-     * 初始化函数
-     * @param map 地图对象
-     * @param viewContainer 视图容器
-     * @returns {Promise<void>}
-     */
-    async init (map, viewContainer) {
-      if (GisGraphicsLayer === null) {
-        GisGraphicsLayer = (await GisUtil.loadModules('esri/layers/GraphicsLayer'))[0]
-      }
-      this.map = map
-      this.viewContainer = viewContainer
-      this.layer = new GisGraphicsLayer({
-        id: this.id,
-        title: this.title
-      })
-      // 添加图层
-      this.map.add(this.layer, this.getIndex())
-      // 加载数据
-      this.loadData()
-    },
-    /**
      * 获取图形元素集合
      */
     getGraphics () {
@@ -106,6 +85,24 @@ export default {
       }
     },
     // -----------私有方法 ------------
+    /**
+     * 创建gis图层
+     */
+    async createGisLayer () {
+      if (GisGraphicsLayer === null) {
+        GisGraphicsLayer = (await GisUtil.loadModules('esri/layers/GraphicsLayer'))[0]
+      }
+      this.layer = new GisGraphicsLayer({
+        id: this.id,
+        title: this.title
+      })
+      // 执行回调
+      if (this.createCallback) {
+        this.createCallback(this.layer, this.getIndex())
+      }
+      // 加载数据
+      this.loadData()
+    },
     /**
      * 转换数据
      */

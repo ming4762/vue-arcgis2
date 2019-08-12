@@ -115,10 +115,27 @@ export default {
   },
   methods: {
     /**
-     * 初始化方法
-     * @returns {Promise<void>}
+     * 获取配置
+     * 如果设置预设信息则使用预设对应tileinof
      */
-    init: async function () {
+    getConfig: function () {
+      if (this.preset !== null) {
+        const layerConfig = config[this.preset]
+        if (this.preset === presetLayer.global) {
+          layerConfig.urlTemplate = layerConfig.urlTemplate + `&tk=${this.token}`
+        }
+        return layerConfig
+      } else {
+        return {
+          urlTemplate: this.urlTemplate,
+          tileInfo: this.tileInfo
+        }
+      }
+    },
+    /**
+     * 创建GIS图层
+     */
+    async createGisLayer () {
       const [TileInfo, WebTileLayer] = await GisUtil.loadModules('esri/layers/support/TileInfo', 'esri/layers/WebTileLayer')
       let tileInfo = null
       const layerConfig = this.getConfig()
@@ -141,25 +158,8 @@ export default {
         properties.subDomains = layerConfig.subDomains
       }
       this.layer = new WebTileLayer(properties)
-      return this.layer
-    },
-    /**
-     * 获取配置
-     * 如果设置预设信息则使用预设对应tileinof
-     */
-    getConfig: function () {
-      if (this.preset !== null) {
-        const layerConfig = config[this.preset]
-        if (this.preset === presetLayer.global) {
-          layerConfig.urlTemplate = layerConfig.urlTemplate + `&tk=${this.token}`
-        }
-        return layerConfig
-      } else {
-        return {
-          urlTemplate: this.urlTemplate,
-          tileInfo: this.tileInfo
-        }
-      }
+      // 添加图层
+      this.getGisMap().add(this.layer, this.getIndex())
     }
   },
   render (h) {
