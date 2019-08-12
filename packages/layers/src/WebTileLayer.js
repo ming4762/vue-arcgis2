@@ -109,8 +109,9 @@ export default {
     }
   },
   created () {
-    if (this.preset === null && this.urlTemplate === null) {
-      console.error('参数错误，如果未选择预设，请设置urlTemplate')
+    if (!this.preset && !this.urlTemplate) {
+      // eslint-disable-line
+      throw Error('参数错误，如果未选择预设，请设置urlTemplate')
     }
   },
   methods: {
@@ -119,7 +120,7 @@ export default {
      * 如果设置预设信息则使用预设对应tileinof
      */
     getConfig: function () {
-      if (this.preset !== null) {
+      if (this.preset) {
         const layerConfig = config[this.preset]
         if (this.preset === presetLayer.global) {
           layerConfig.urlTemplate = layerConfig.urlTemplate + `&tk=${this.token}`
@@ -158,10 +159,13 @@ export default {
         properties.subDomains = layerConfig.subDomains
       }
       this.layer = new WebTileLayer(properties)
-      // 添加图层
-      this.getGisMap().add(this.layer, this.getIndex())
+      // 执行回调
+      if (this.createCallback) {
+        this.createCallback(this.layer, this.getIndex())
+      }
     }
   },
+  /* eslint-disable */
   render (h) {
     return undefined
   }

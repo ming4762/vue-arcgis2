@@ -131,6 +131,7 @@ export default {
     getGraphicType (data, baseGraphicType) {
       const graphicType = data.graphicType || baseGraphicType
       if (!graphicType) {
+        /* eslint-disable */
         console.warn('获取元素类型失败')
       }
       return graphicType

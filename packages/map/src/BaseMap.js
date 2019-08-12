@@ -64,7 +64,7 @@ export default {
         const child = children[i]
         if (child['type'] === 'layer') {
           indexObject.index = indexObject.index + 1
-          child.init(this.viewContainer, indexObject.index, (gisLayer, index) => {
+          child.init(this.viewContainer, indexObject.index, (gisLayer) => {
             this.baseap.baseLayers.push(gisLayer)
           })
           // const layer = await child.init(this.viewContainer, indexObject.index)
@@ -76,6 +76,7 @@ export default {
       }
     }
   },
+  /* eslint-disable */
   render (h) {
     return (
       <div>

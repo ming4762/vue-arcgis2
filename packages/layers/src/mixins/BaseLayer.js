@@ -53,6 +53,7 @@ export default {
       }
     },
     createGisLayer () {
+      /* eslint-disable */
       console.warn("未覆盖方法，未能创建图层")
     },
     /**
