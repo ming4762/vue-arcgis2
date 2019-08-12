@@ -6,14 +6,16 @@ import {
 } from '../packages/layers'
 
 import {
-  ArcgisMap
+  ArcgisMap,
+  BaseMap
 } from '../packages/map'
 
 const components = [
   ArcgisView,
   GraphicsLayer,
   WebTileLayer,
-  ArcgisMap
+  ArcgisMap,
+  BaseMap
 ]
 
 const install = function (Vue) {
