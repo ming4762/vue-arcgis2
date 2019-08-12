@@ -50,7 +50,6 @@ export default {
      * @returns {Promise<void>}
      */
     initMapProperties: async function () {
-      const abc = await this.getBaseMap()
       return {
         basemap: await this.getBaseMap()
       }
@@ -65,7 +64,7 @@ export default {
       for (let i = 0; i < this.$children.length; i++) {
         const child = this.$children[i]
         if (child.name === 'base-map') {
-          baseMap = await child.init()
+          baseMap = await child.init(this.viewContainer)
         }
       }
       if (baseMap === null) {
@@ -89,16 +88,14 @@ export default {
     },
     /**
      * 添加图层
-     * @param layer
-     * @param index
+     * @param layerVue layer vue对象
+     * @param index 图层序号
      */
-    addLayer: function (layer, index) {
-      // 设置默认序号
-      layer.setDefaultIndex(index)
-      // 如果图层是显示的直接创建
-      if (layer.getVisible() === true) {
-        layer.init(this.map, this.viewContainer)
-      }
+    addLayer: function (layerVue, index) {
+      // 初始化图层对象
+      layerVue.init(this.viewContainer, index, (gisLayer, index) => {
+        this.map.add(gisLayer, index)
+      })
     }
   },
   /* eslint-disable */
