@@ -133,6 +133,12 @@ export default {
     getActiveView: function () {
       return this.viewContainer.activeView
     },
+    /**
+     * 设置视图中心
+     */
+    setCenter: function (point) {
+      this.getActiveView().center = point
+    },
     // ---------------- 私有方法 ----------------
     /**
      * 创建视图

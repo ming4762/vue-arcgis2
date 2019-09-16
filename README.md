@@ -78,7 +78,7 @@ graphics-added | 所有元素添加完毕时触发|
 ### Attributes
 参数 | 说明 | 类型 | 可选值 | 默认值
 -|-|-|-|-
-preset | 预设模板 | string | shandong：山东天地图，global：全国天地图| 
+preset | 预设模板 | string | shandong：山东天地图，global：全国天地图, global_node：全国天地图注记，global_water：全国天地图水系，global_image：全国天地图影像，global_terrain：全国天地图地形| 
 urlTemplate | 资源地址模板| string || 
 copyright | 参考arcgis文档|string | |
 tileInfo | 参考arcgis 文档| object| |

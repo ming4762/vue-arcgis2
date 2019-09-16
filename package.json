@@ -6,7 +6,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "lib": "vue-cli-service build --target lib --name vue-arcgis2 --dest lib src/index.js"
+    "lib": "vue-cli-service build --target lib --name vue-arcgis2 --dest lib src/index.js",
+    "lib-es6": "vue-cli-service build --modern --name vue-arcgis2 --dest lib src/index.js"
   },
   "dependencies": {
     "core-js": "^2.6.5",

@@ -1,3 +1,5 @@
+import Vue from 'vue'
+
 // 视图组件
 import ArcgisView from '../packages/view'
 import {
@@ -31,7 +33,10 @@ if (typeof window !== 'undefined' && window.Vue) {
   install(window.Vue)
 }
 
-export default {
+const installComponents = {
   install,
   ...components
 }
+
+Vue.use(installComponents)
+
